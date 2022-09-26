@@ -12,23 +12,32 @@ import java.util.Date;
  * @author Admin
  */
 public class House {
+    
     private int houseid;
     private Date postdate;
-    private String status;
+    private int status;
     private String review;
-    private int housedetailid;
-    private int bill;
+    private String housename;
+    private double price;
+    private String address;
+    private String description;
+    private TypeHouse type;
+    private Location location;
 
     public House() {
     }
 
-    public House(int houseid, Date postdate, String status, String review, int housedetailid, int bill) {
+    public House(int houseid, Date postdate, int status, String review, String housename, double price, String address, String description, TypeHouse type, Location location) {
         this.houseid = houseid;
         this.postdate = postdate;
         this.status = status;
         this.review = review;
-        this.housedetailid = housedetailid;
-        this.bill = bill;
+        this.housename = housename;
+        this.price = price;
+        this.address = address;
+        this.description = description;
+        this.type = type;
+        this.location = location;
     }
 
     public int getHouseid() {
@@ -47,11 +56,11 @@ public class House {
         this.postdate = postdate;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -63,20 +72,52 @@ public class House {
         this.review = review;
     }
 
-    public int getHousedetailid() {
-        return housedetailid;
+    public String getHousename() {
+        return housename;
     }
 
-    public void setHousedetailid(int housedetailid) {
-        this.housedetailid = housedetailid;
+    public void setHousename(String housename) {
+        this.housename = housename;
     }
 
-    public int getBill() {
-        return bill;
+    public double getPrice() {
+        return price;
     }
 
-    public void setBill(int bill) {
-        this.bill = bill;
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public TypeHouse getType() {
+        return type;
+    }
+
+    public void setType(TypeHouse type) {
+        this.type = type;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
     
     

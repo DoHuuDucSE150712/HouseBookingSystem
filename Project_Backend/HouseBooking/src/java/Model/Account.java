@@ -16,21 +16,23 @@ public class Account {
     private String username;
     private String pass;
     private int phone;
-    private String email;
+    private int status;
     private int roleid;
+    private String token;
 
     public Account() {
     }
 
-    public Account(int userid, String fullname, String userimg, String username, String pass, int phone, String email, int roleid) {
+    public Account(int userid, String fullname, String userimg, String username, String pass, int phone, int status, int roleid, String token) {
         this.userid = userid;
         this.fullname = fullname;
         this.userimg = userimg;
         this.username = username;
         this.pass = pass;
         this.phone = phone;
-        this.email = email;
+        this.status = status;
         this.roleid = roleid;
+        this.token = token;
     }
 
     public int getUserid() {
@@ -81,12 +83,12 @@ public class Account {
         this.phone = phone;
     }
 
-    public String getEmail() {
-        return email;
+    public int getStatus() {
+        return status;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public int getRoleid() {
@@ -97,5 +99,14 @@ public class Account {
         this.roleid = roleid;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+    
+    
     
 }

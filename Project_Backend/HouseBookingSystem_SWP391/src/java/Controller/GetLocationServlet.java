@@ -1,27 +1,28 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package Controller;
 
-import Dao.HouseDAO;
-import Model.House;
+import Dao.LocationDAO;
+import Model.Location;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Admin
+ * @author Asus
  */
-public class ListHouseServlet extends HttpServlet {
+@WebServlet(name = "GetLocationServlet", urlPatterns = {"/GetLocationServlet"})
+public class GetLocationServlet extends HttpServlet {
 private static final String ERROR = "error.jsp";
-    private static final String SUCCESS = "ListHouse.jsp";
+    private static final String SUCCESS = "Index.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,18 +35,18 @@ private static final String ERROR = "error.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
-            try {
-            HouseDAO dao = new HouseDAO();
-            List<House> list = dao.getHouse();
-            request.setAttribute("HouseList", list);
+String url = ERROR;
+        try {
+            LocationDAO ldao = new LocationDAO();
+            List<Location> locations = ldao.getLocation();
+            request.setAttribute("LISTLOCATION", locations);
             url = SUCCESS;
-            } catch (Exception e) {
-                log("ERROR at ListHouseServlet: "+e.toString());
-            }finally{
-                request.getRequestDispatcher(url).forward(request, response);
-            }
+        } catch (Exception e) {
+            log("ERROR at GetLocationServlet: " + e.toString());
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
         }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

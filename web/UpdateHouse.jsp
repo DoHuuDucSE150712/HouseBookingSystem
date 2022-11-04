@@ -54,6 +54,7 @@
             <a href="ListHouseServlet">Room</a>
             <a href="ListBillServlet">Orders</a>
             <a href="ListAccountServlet">Users</a>
+            <a href="ListAddService">Service</a>
             <a href="ListCommentServlet">Messages</a>
          </nav>
    
@@ -171,11 +172,6 @@
     </section>
 
     </body>
-</html>
-
-
-
-    </body>
-</html>
-   <!-- custom admin js file link  -->
+       <!-- custom admin js file link  -->
     <script src="admin_script.js"></script>
+</html>

@@ -9,6 +9,7 @@ import Model.BillDetail;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +29,35 @@ public class BillDetailDAO {
             System.out.println("error: "+e);
         }
     }
+    
+    public BillDetail getBillDeatailbyhouId(int id){
+        String sql = "select * from Bill_detail where house_id = ?";
+        BillDetail b = null;
+        
+        try {
+            //tạo khay chứa câu lệnh
+            PreparedStatement pre = con.prepareStatement(sql);
+            pre.setInt(1, id);
+            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
+            ResultSet resultSet = pre.executeQuery();
+            while(resultSet.next()){
+                int billdetailid = resultSet.getInt(1);
+                int billid = resultSet.getInt(2);
+                int houseid = resultSet.getInt(3);
+                Date startdate = resultSet.getDate(4);
+                Date enđate = resultSet.getDate(5);
+                String note = resultSet.getString(6);
+
+                //tạo model hứng giữ liệu
+                b = new BillDetail(billdetailid, billid, houseid, startdate, enđate, note);
+            }
+        } catch (Exception e) {
+            System.out.println("error: "+e);
+        }
+        
+        return b;
+    }
+    
     
     public List<BillDetail> getBillDeatai(){
         String sql = "select * from Bill_detail";
@@ -126,7 +156,7 @@ public class BillDetailDAO {
         }
     }
     
-    public void addBillDetail(BillDetail billdetail){
+    public int addBillDetail(BillDetail billdetail){
         String sql = "INSERT INTO [dbo].[Bill_detail]\n" +
                     "           ([bill_id]\n" +
                     "           ,[house_id]\n" +
@@ -139,9 +169,10 @@ public class BillDetailDAO {
                     "           ,?\n" +
                     "           ,?\n" +
                     "           ,?)";
+        int id = -1;
         try {
             //tạo khay chứa câu lệnh
-            PreparedStatement pre = con.prepareStatement(sql);
+            PreparedStatement pre = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             //set gia tri cho dau ? 
             pre.setInt(1, billdetail.getBillid());
             pre.setInt(2, billdetail.getHouseid());
@@ -152,10 +183,49 @@ public class BillDetailDAO {
             pre.setString(5, billdetail.getNote());
             //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
             pre.executeUpdate();
+            
+              //get id
+            ResultSet generatedKeys = pre.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                id = generatedKeys.getInt(1);
+            } else {
+                throw new Exception("Creating bill failed, no ID obtained.");
+            }
 
         } catch (Exception e) {
             System.out.println("error :  " + e);
         }
+        
+        return id;
+    }
+    
+   
+    public BillDetail getBillDeatailbyBillID(int billID){
+        String sql = "select * from Bill_detail where bill_id = ?";
+        BillDetail b = new BillDetail();
+        
+        try {
+            //tạo khay chứa câu lệnh
+            PreparedStatement pre = con.prepareStatement(sql);
+            pre.setInt(1, billID);
+            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
+            ResultSet resultSet = pre.executeQuery();
+            while(resultSet.next()){
+                int billdetailid = resultSet.getInt(1);
+                int billid = resultSet.getInt(2);
+                int houseid = resultSet.getInt(3);
+                Date startdate = resultSet.getDate(4);
+                Date enđate = resultSet.getDate(5);
+                String note = resultSet.getString(6);
+
+                //tạo model hứng giữ liệu
+                b = new BillDetail(billdetailid, billid, houseid, startdate, enđate, note);
+            }
+        } catch (Exception e) {
+            System.out.println("error: "+e);
+        }
+        
+        return b;
     }
     
 //        public static void main(String[] args) {

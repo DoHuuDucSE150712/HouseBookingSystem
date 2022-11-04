@@ -31,24 +31,27 @@ public class LogoutServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            HttpSession session = request.getSession();
-            boolean a = (boolean) session.getAttribute("rememberme");
-            if (!a) {
-                Cookie[] cookies = request.getCookies();
-                if (cookies != null) {
-                    for (int i = 0; i < cookies.length; i++) {
-                        cookies[i].setMaxAge(0);
-                        response.addCookie(cookies[i]);
-                    }
+        HttpSession session = request.getSession();
+        session.removeAttribute("mess");
+//            Account agmail = (Account)session.getAttribute("acc");
+//            AccountDAO dao = new AccountDAO();
+//            Account acc = dao.checkAccountByEmail(agmail.getEmail());
+//            if(acc != null){
+        boolean a = (boolean) session.getAttribute("rememberme");
+        if (!a) {
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (int i = 0; i < cookies.length; i++) {
+                    cookies[i].setMaxAge(0);
+                    response.addCookie(cookies[i]);
                 }
             }
-            session.removeAttribute("fullname");
-            session.removeAttribute("username");
-            session.removeAttribute("password");
-            session.removeAttribute("rememberme");
-            response.sendRedirect("Index.jsp");
         }
+//            }
+        session.removeAttribute("acc");
+        session.removeAttribute("rememberme");
+        response.sendRedirect("Index.jsp");
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

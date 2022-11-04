@@ -15,6 +15,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Form;
@@ -39,7 +40,9 @@ public class LoginGoogleServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
         String code = request.getParameter("code");
+        Account a = null;
         if (code == null || code.isEmpty()) {
             response.sendRedirect("login.jsp");
         } else {
@@ -50,10 +53,14 @@ public class LoginGoogleServlet extends HttpServlet {
             AccountDAO adao = new AccountDAO();
             Account aemail = adao.checkAccountByEmail(email);
             if (aemail == null) {
-                Role role = new Role(2, "customer");
-                Account a = new Account(-1, user.getName(), user.getPicture(), null, null, email, null, 1, role);
+                Role role = new Role(1, "customer");
+                a = new Account(-1, user.getName(), user.getPicture(), user.getEmail(), "1", email, null, 1, role);
                 adao.signupAccount(a);
+            }else{
+                a = adao.getAccountbyEmail(email);
             }
+            session.setAttribute("acc", a);
+            session.setAttribute("rememberme", true);
             request.setAttribute("fullname", user.getName());
             request.getRequestDispatcher("Index.jsp").forward(request, response);
 

@@ -54,6 +54,7 @@
             <a href="ListHouseServlet">Room</a>
             <a href="ListBillServlet">Orders</a>
             <a href="ListAccountServlet">Users</a>
+            <a href="ListAddService">Service</a>
             <a href="ListCommentServlet">Messages</a>
          </nav>
    
@@ -75,13 +76,6 @@
       <h1 class="title">Add House</h1>
 
       <form action="AddHouseServlet" method="post" >
-        <input
-          type="text"
-          name="houseid"
-          class="box"
-          placeholder="Enter Account ID"
-          hidden="true"
-        />
         <h2>Post Date</h2>
         <input
           type="date"
@@ -155,6 +149,42 @@
                 }
                 %>
         </select>
+        <form action="UserServlet" method="post" enctype="multipart/form-data">
+
+                            <div class="card-body text-center">
+                                <!-- Profile picture image-->
+                                <img class="img-account-profile rounded-circle mb-2"  src="<%=userimg%>" >
+
+                                <!-- Profile picture help block-->
+                                <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                                <!-- Profile picture upload button--> 
+
+                                <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+                                <main class="main_full">
+                                    <div class="container">
+                                        <div class="panel">
+                                            <div class="button_outer">
+                                                <div class="btn_upload">
+                                                    <input type="file" id="upload_file" name="userimage" size="50">
+                                                    Upload Image
+                                                </div>
+                                                <div class="processing_bar"></div>
+                                                <div class="success_box"></div>
+                                            </div>
+                                        </div>
+                                        <div class="error_msg"></div>
+                                        <div class="uploaded_file_view" id="uploaded_view">
+                                            <span class="file_remove">X</span>
+                                        </div>
+                                    </div>
+        <h2>House ID</h2>
+        <input
+          type="text"
+          name="houseid"
+          value="<%=h.getHouseid()+1 %>"
+          class="box"
+          placeholder="Enter HouseId"
+        />
             
         
         
@@ -162,5 +192,5 @@
       </form>
     </section>
     </body>
+    <script src="admin_script.js"></script>
 </html>
-<script src="admin_script.js"></script>

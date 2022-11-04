@@ -35,12 +35,13 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
         HttpSession session = request.getSession();
+        session.removeAttribute("mess");
         boolean flag = false;
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         boolean rememberMe = request.getParameter("rememberme") != null;
-        
         
         // lay file trong web.xml
         AccountDAO dao = new AccountDAO();
@@ -48,20 +49,35 @@ public class LoginServlet extends HttpServlet {
         a = dao.getAccountLogin(username, password);
         List<Account> list = dao.getAllAccount();
         try {
-                //ko nhập gì cả
-                if (username == null || username.equals("") || password == null | password.equals("")) {
-                    request.setAttribute("mess", "User name or passwwor has wrong!");
-                    request.setAttribute("username", username);
-                    request.getRequestDispatcher("login.jsp").forward(request, response);
-                } else {
-                    if (rememberMe) {
-                        for (Account acc : list) {
-                            if (username.equals(acc.getUsername()) && password.equals(acc.getPass())
-                                    && acc.getRole().getId() == 0) {//admin role
-                                session.setAttribute("email", acc.getEmail());
-                                session.setAttribute("fullname", acc.getFullname());
+            //ko nhập gì cả
+            if (username == null || username.equals("") || password == null | password.equals("")) {
+                request.setAttribute("mess", "User name or passwwor has wrong!");
+                request.setAttribute("username", username);
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
+            } else {
+                if (rememberMe) {
+                    for (Account acc : list) {
+                        if (username.equals(acc.getUsername()) && password.equals(acc.getPass())
+                                && acc.getRole().getId() == 0) {//admin role
+                            session.setAttribute("acc", a);
+                            session.setAttribute("username", acc.getUsername());
+                            session.setAttribute("email", acc.getEmail());
+                            session.setAttribute("rememberme", rememberMe);
+                            //cookie
+                            Cookie cUsername = new Cookie("cusername", acc.getUsername());
+                            Cookie cPassword = new Cookie("cpassword", acc.getPass());
+                            cUsername.setMaxAge(60 * 60 * 24);
+                            cPassword.setMaxAge(60 * 60 * 24);
+                            response.addCookie(cUsername);
+                            response.addCookie(cPassword);
+                            response.sendRedirect("DashboardServlet");
+                            flag = true;
+                        } else if (username.equals(acc.getUsername()) && password.equals(acc.getPass())
+                                && acc.getRole().getId() == 1) {//customer
+                            if (a.getStatus() == 1) {
+                                session.setAttribute("acc", a);
                                 session.setAttribute("username", acc.getUsername());
-                                session.setAttribute("password", acc.getPass());
+                            session.setAttribute("email", acc.getEmail());
                                 session.setAttribute("rememberme", rememberMe);
                                 //cookie
                                 Cookie cUsername = new Cookie("cusername", acc.getUsername());
@@ -70,68 +86,44 @@ public class LoginServlet extends HttpServlet {
                                 cPassword.setMaxAge(60 * 60 * 24);
                                 response.addCookie(cUsername);
                                 response.addCookie(cPassword);
-                                response.sendRedirect("AdminIndex.jsp");
+                                response.sendRedirect("Index.jsp");
                                 flag = true;
-                            }
-                            else if (username.equals(acc.getUsername()) && password.equals(acc.getPass())
-                                    && acc.getRole().getId() == 2) {//customer
-                                if(a.getStatus() == 1){
-                                    session.setAttribute("email", acc.getEmail());
-                                    session.setAttribute("fullname", acc.getFullname());
-                                session.setAttribute("username", acc.getUsername());
-                                session.setAttribute("password", acc.getPass());
-                                session.setAttribute("rememberme", rememberMe);
-                                //cookie
-                                Cookie cUsername = new Cookie("cusername", acc.getUsername());
-                                Cookie cPassword = new Cookie("cpassword", acc.getPass());
-                                cUsername.setMaxAge(60 * 60 * 24);
-                                cPassword.setMaxAge(60 * 60 * 24);
-                                response.addCookie(cUsername);
-                                response.addCookie(cPassword);
-                                response.sendRedirect("persionalpage.jsp");
-                                flag = true;
-                                }
-                                else{
-                                       response.sendRedirect("Error.jsp");
-                                   }
-                            }
-                        }
-                    } else {
-
-                        for (Account acc : list) {
-                            if (username.equals(acc.getUsername()) && password.equals(acc.getPass())
-                                    && acc.getRole().getId() == 0) {
-                                session.setAttribute("email", acc.getEmail());
-                                session.setAttribute("fullname", acc.getFullname());
-                                session.setAttribute("username", acc.getUsername());
-                                session.setAttribute("password", acc.getPass());
-                                session.setAttribute("rememberme", rememberMe);
-                                response.sendRedirect("AdminIndex.jsp");
-                                flag = true;
-                            }
-                            else if (username.equals(acc.getUsername()) && password.equals(acc.getPass())
-                                    && acc.getRole().getId() == 2) {//customer
-                                   if(a.getStatus() == 1){
-                                       session.setAttribute("email", acc.getEmail());
-                                       session.setAttribute("status", acc.getStatus());
-                                session.setAttribute("fullname", acc.getFullname());
-                                session.setAttribute("username", acc.getUsername());
-                                session.setAttribute("password", acc.getPass());
-                                session.setAttribute("rememberme", rememberMe);
-                                response.sendRedirect("persionalpage.jsp");
-                                flag = true;
-                                   }
-                                   else{
-                                       response.sendRedirect("Error.jsp");
-                                   }
+                            } else {
+                                response.sendRedirect("Error.jsp");
                             }
                         }
                     }
-                    if (!flag) {
-                        session.setAttribute("mess", "Wrong username or password!!!");
-                        response.sendRedirect("login.jsp");
+                } else {
+
+                    for (Account acc : list) {
+                        if (username.equals(acc.getUsername()) && password.equals(acc.getPass())
+                                && acc.getRole().getId() == 0) {
+                            session.setAttribute("acc", a);
+                            session.setAttribute("username", acc.getUsername());
+                            session.setAttribute("email", acc.getEmail());
+                            session.setAttribute("rememberme", rememberMe);
+                            response.sendRedirect("DashboardServlet");
+                            flag = true;
+                        } else if (username.equals(acc.getUsername()) && password.equals(acc.getPass())
+                                && acc.getRole().getId() == 1) {//customer
+                            if (a.getStatus() == 1) {
+                                session.setAttribute("acc", a);
+                                session.setAttribute("username", acc.getUsername());
+                            session.setAttribute("email", acc.getEmail());
+                                session.setAttribute("rememberme", rememberMe);
+                                response.sendRedirect("Index.jsp");
+                                flag = true;
+                            } else {
+                                response.sendRedirect("Error.jsp");
+                            }
+                        }
                     }
                 }
+                if (!flag) {
+                    request.setAttribute("mess", "Wrong username or password!!!");
+                    request.getRequestDispatcher("/login.jsp").forward(request, response);
+                }
+            }
 
         } catch (Exception e) {
             System.out.println("error: " + e);

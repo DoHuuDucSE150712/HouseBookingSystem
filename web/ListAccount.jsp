@@ -31,8 +31,6 @@
 
     
     <body>
-    </head>
-    <body>
     
          <%
         List<Account> list = new ArrayList<Account>();
@@ -58,6 +56,7 @@
             <a href="ListHouseServlet">Room</a>
             <a href="ListBillServlet">Orders</a>
             <a href="ListAccountServlet">Users</a>
+            <a href="ListAddService">Service</a>
             <a href="ListCommentServlet">Messages</a>
          </nav>
    
@@ -74,8 +73,8 @@
    
       </div>
    </header>
-
-        <table>
+                <section class="dashboard">
+                    <table>
             
          <form action="SearchAccountServlet" class="search-bar-container"  method="post">
         <input style="height: 60px;font-size: 40px;" type="text" name="search" id="search-bar" placeholder="Search here..."">
@@ -156,8 +155,9 @@
                 
         </table>
     </div>
-   
+                </section>
+        
        
     </body>
+    <script src="admin_script.js"></script>
 </html>
-<script src="admin_script.js"></script>

@@ -4,6 +4,8 @@
     Author     : Admin
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@page import="Model.HouseImg"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -26,9 +28,9 @@
     </head>
     <body>
         <%
-        HouseImg h = new HouseImg();
+        List<HouseImg> list = new ArrayList<>();
         if(request.getAttribute("hid") != null){
-            h = (HouseImg) request.getAttribute("hid");
+            list = (List<HouseImg>) request.getAttribute("hid");
         }
         %>
         <div class="header_fixed">
@@ -50,6 +52,7 @@
             <a href="ListHouseServlet">Room</a>
             <a href="ListBillServlet">Orders</a>
             <a href="ListAccountServlet">Users</a>
+            <a href="ListAddService">Service</a>
             <a href="ListCommentServlet">Messages</a>
          </nav>
    
@@ -75,20 +78,24 @@
                     <th>Action</th>
                     </tr>
                 </thead>
+                <%
+                for(HouseImg h : list){
+                %>
                 <tr>
                     <td><%=h.getImgid() %></td>
                     <td><%=h.getImglink() %></td>
                     <td><%=h.getHouseid() %></td>
                     <td>
                             <span class="action_btn">
-                                <a href="NextEditBillServlet?id=<%=h.getImgid() %>">Update</a>
-                                <a href="DeleteBillServlet?id=<%=h.getImgid() %>">Delete</a>
-                                <a href="AddBill.jsp">Add</a>
+                                <a href="NextEditHouseImgServlet?id=<%=h.getHouseid() %>">Update</a>
                             </span>
                     </td>
                 </tr>
+                <%
+                    }
+                %>
             </table>
             </div>
     </body>
+    <script src="admin_script.js"></script>
 </html>
-<script src="admin_script.js"></script>

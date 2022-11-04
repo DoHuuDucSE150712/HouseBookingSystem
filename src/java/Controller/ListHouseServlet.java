@@ -20,7 +20,7 @@ import java.util.List;
  * @author Admin
  */
 public class ListHouseServlet extends HttpServlet {
-
+ 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.

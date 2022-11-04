@@ -116,4 +116,5 @@
      %>
     </section>
     </body>
+    <script src="admin_script.js"></script>
 </html>

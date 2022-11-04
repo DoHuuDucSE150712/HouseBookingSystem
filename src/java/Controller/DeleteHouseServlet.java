@@ -6,6 +6,7 @@
 package Controller;
 
 import Dao.HouseDAO;
+import Dao.HouseImgDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,12 +32,14 @@ public class DeleteHouseServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            int cid = Integer.parseInt(request.getParameter("cid"));
-        HouseDAO dao = new HouseDAO();
-        dao.deleteHouse(cid);
-        response.sendRedirect("ListHouseServlet");
+            int id = Integer.parseInt(request.getParameter("id"));
+            HouseDAO dao = new HouseDAO();
+            dao.deleteHouse(id);
+            HouseImgDAO hdao = new HouseImgDAO();
+            hdao.deleteHouse(id);
+            response.sendRedirect("ListHouseServlet");
         }
     }
 

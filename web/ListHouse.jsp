@@ -53,6 +53,7 @@
             <a href="ListHouseServlet">Room</a>
             <a href="ListBillServlet">Orders</a>
             <a href="ListAccountServlet">Users</a>
+            <a href="ListAddService">Service</a>
             <a href="ListCommentServlet">Messages</a>
          </nav>
    
@@ -113,6 +114,8 @@
                                 <a href="NextEditHouseServlet?id=<%=h.getHouseid() %>">Update</a>
                                 <a href="DeleteHouseServlet?id=<%=h.getHouseid() %>">Delete</a>
                                 <a href="NextAddHouseServlet">Add</a>
+                                <a href="ListServiceServlet?id=<%=h.getHouseid() %>">View Service</a>
+                                <a href="NextAddServiceServlet?id=<%=h.getHouseid() %>">Add Service</a>
                             </span>
                                 </td>
                 </tr>
@@ -122,5 +125,5 @@
             </table>
             </div>
     </body>
+    <script src="admin_script.js"></script>
 </html>
-<script src="admin_script.js"></script>

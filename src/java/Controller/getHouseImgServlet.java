@@ -12,6 +12,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -34,7 +36,7 @@ public class getHouseImgServlet extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             int id = Integer.parseInt(request.getParameter("id"));
-            HouseImg h = new HouseImg();
+            List<HouseImg> h = new ArrayList<>();
             HouseImgDAO dao = new HouseImgDAO();
             h = dao.getHouseImgbyID(id);
             if(h != null){

@@ -5,8 +5,10 @@
  */
 package Controller;
 
+import Dao.HouseDAO;
 import Dao.LocationDAO;
 import Dao.MenuDAO;
+import Model.House;
 import Model.Location;
 import Model.Menu;
 import jakarta.servlet.ServletException;
@@ -66,6 +68,9 @@ public class NextAddHouseServlet extends HttpServlet {
         List<Location> llist = ldao.getLocation();
         MenuDAO mdao = new MenuDAO();
         List<Menu> mlist = mdao.getMenu();
+        HouseDAO dao = new HouseDAO();
+        House h = dao.getHouses();
+        request.setAttribute("house", h);
         request.setAttribute("llist", llist);
         request.setAttribute("mlist", mlist);
         request.getRequestDispatcher("AddHouse.jsp").forward(request, response);

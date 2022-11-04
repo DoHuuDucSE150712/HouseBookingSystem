@@ -4,6 +4,8 @@
     Author     : Admin
 --%>
 
+
+    <section class="dashboard"><%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="Model.Account"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,7 +17,7 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
    <!-- custom admin css file link  -->
-   <link rel="stylesheet" href="admin_style.css">
+   <link href="css/Admin_style.css" rel="stylesheet" type="text/css"/>
    <!-- Boostrap 5 -->
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>  
@@ -35,6 +37,7 @@
             <a href="ListHouseServlet">Room</a>
             <a href="ListBillServlet">Orders</a>
             <a href="ListAccountServlet">Users</a>
+            <a href="ListAddService">Service</a>
             <a href="ListCommentServlet">Messages</a>
          </nav>
    
@@ -54,59 +57,58 @@
         
         
           <!-- admin dashboard section starts  -->
-
-      <section class="dashboard">
-
-         <h1 class="title">dashboard</h1>
-
-         <div class="box-container">
-
-            <div class="box">
-               <h3></h3>
-               <p>total pendings</p>
+      <h1 class="title">dashboard</h1>
+       <div class="title">Top 3 House Booking</div>
+      <div class="top3House-containner">
+              <c:forEach items="${listHouse}" var="house">
+      <div class="Housetopcontainner">
+        <div class="box">
+          <h3>${house.housename}</h3>
+          <p>Total cost: 200000 <i class="fa-solid fa-dong-sign"></i></p>
+          <p>${house.numberBill} Select</p>
+        </div>
             </div>
+          </c:forEach>
+      </div>
 
-            <div class="box">
-               <h3></h3>
-               <p>completed payments</p>
+              <div class="title">Top 3 Users</div>
+           <div class="top3House-containner">
+        <c:forEach items="${listAcount}" var="acount">
+        <div class="Housetopcontainner">
+        <div class="box">
+          <h3>${acount.username}</h3>
+          <p>Total cost: ${acount.total} <i class="fa-solid fa-dong-sign"></i></p>
+        </div>
             </div>
+          </c:forEach>
+               </div>
+      <div class="box-container"> 
+          <div class="title">Type Users and total accounts
+          <div class="box">
+          <h3></h3>
+          <p>Number of normal users: ${countUser} <i class="fas fa-user"></i></p>
+        </div>
+        <div class="box">
+          <h3></h3>
+          <p>Number of admin users: ${countAdmin} <i class="fas fa-user"></i></p>
+        </div>
 
-            <div class="box">
-               <h3></h3>
-               <p>order placed</p>
-            </div>
+        <div class="box">
+          <h3></h3>
+          <p>total accounts: ${countAdmin} <i class="fas fa-user"></i></p>
+        </div>
+          </div>
+        
+          
+      </div>
 
-            <div class="box">
-               <h3></h3>
-               <p>products added</p>
-            </div>
 
-            <div class="box">
-               <h3></h3>
-               <p>normal users</p>
-            </div>
 
-            <div class="box">
-               <h3></h3>
-               <p>admin users</p>
-            </div>
+      
+    </section>
 
-            <div class="box">
-               <h3></h3>
-               <p>total accounts</p>
-            </div>
-
-            <div class="box">
-               <h3></h3>
-               <p>new messages</p>
-            </div>
-
-         </div>
-
-      </section>
 
         
     </body>
+    <script src="admin_script.js"></script>
 </html>
-<script src="admin_script.js"></script>
-<script src="admin_script.js"></script>

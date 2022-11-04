@@ -15,4 +15,5 @@
         <p>invalid email or password</p>
         <p><a href="Login.jsp">Please login again</a></p>
     </body>
+    <script src="admin_script.js"></script>
 </html>
